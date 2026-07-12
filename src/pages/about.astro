@@ -45,15 +45,15 @@ const railItems = [
     }
   </nav>
 
-  <section class="fade-in flex items-start justify-between gap-10 pb-12 max-sm:flex-col-reverse max-sm:pt-16">
-    <div class="max-w-[520px]">
+  <section class="fade-in flex items-start justify-between gap-10 pb-12 max-sm:flex-col-reverse max-sm:items-center max-sm:pt-16">
+    <div class="max-w-[520px] max-sm:text-center">
       <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// about</p>
       <h1 class="mt-4 font-mono text-[40px] font-bold tracking-tight text-ink">noa4021j</h1>
       <p class="mt-1.5 font-mono text-[13px] text-muted">Software Engineer, AI/LLM</p>
       <p class="mt-5 text-[15px] leading-loose text-sub">
-        AI/LLMを軸に、業務で安全に運用できるエージェントアプリケーションを設計・実装しています。モバイルで培った設計・技術リード経験を基盤に、FastAPI・GCPを用いたバックエンドまで領域を広げています。
+        事業課題を技術課題へ翻訳し、曖昧な要求を運用可能なソフトウェアへ落とし込むエンジニアです。5年以上のプロダクト開発で、大規模移行、信頼性設計、技術的意思決定、チーム改善をリードしてきました。現在はAI/LLMアプリケーションを軸に、バックエンドとソフトウェアアーキテクチャへ領域を広げています。
       </p>
-      <div class="mt-5 flex gap-2.5">
+      <div class="mt-5 flex gap-2.5 max-sm:justify-center">
         {
           socials.map((s) => (
             <a href={s.data.url} title={s.data.name} class="icon-btn flex h-10 w-10 items-center justify-center rounded-full border border-line bg-chip text-sub">
