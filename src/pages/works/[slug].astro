@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const works = await getCollection("works");
+  return works.map((work) => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { title, summary, detail, role, period, stack, links, coverImage } = work.data;
+---
+
+<BaseLayout title={title} description={summary}>
+  <article class="pt-2">
+    <div class="sc-cover relative mb-8 h-[280px] overflow-hidden rounded-xl border border-line shadow-float sm:h-[360px]">
+      {
+        coverImage ? (
+          <img src={coverImage} alt={title} class="absolute inset-0 h-full w-full object-cover" />
+        ) : (
+          <div class="bg-stripes absolute inset-0 flex items-center justify-center font-mono text-xs text-ghost">cover image</div>
+        )
+      }
+    </div>
+    <header class="mb-9 border-b border-line pb-8">
+      <p class="font-mono text-xs text-faint">{period} · {role}</p>
+      <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">{title}</h1>
+      <ul class="mt-4 flex flex-wrap gap-1.5">
+        {stack.map((tech) => <li class="rounded-sm border border-line-soft bg-chip px-2.5 py-1 font-mono text-xs text-muted">{tech}</li>)}
+      </ul>
+      {
+        links && (links.repo || links.site) && (
+          <div class="mt-4 flex gap-5 font-mono text-sm">
+            {links.repo && <a href={links.repo} class="text-muted hover:text-ink">github ↗</a>}
+            {links.site && <a href={links.site} class="text-accent hover:underline">site ↗</a>}
+          </div>
+        )
+      }
+    </header>
+    <p class="max-w-[680px] text-[15px] leading-loose text-sub">{detail}</p>
+  </article>
+</BaseLayout>

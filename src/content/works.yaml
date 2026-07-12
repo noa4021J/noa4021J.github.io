@@ -1,0 +1,22 @@
+- id: sample-project-1
+  title: Sample Project 1
+  summary: 実績データはプレースホルダーです。後日、実際のプロダクト情報に差し替えてください。
+  detail: プロジェクトの詳細説明はここに記述します。
+  role: エンジニア
+  period: 20XX.XX - 20XX.XX
+  stack:
+    - Swift
+    - SwiftUI
+  links:
+    repo: https://github.com/noa4021j
+  order: 1
+- id: sample-project-2
+  title: Sample Project 2
+  summary: 実績データはプレースホルダーです。後日、実際のプロダクト情報に差し替えてください。
+  detail: プロジェクトの詳細説明はここに記述します。
+  role: 個人開発
+  period: 20XX.XX - 20XX.XX
+  stack:
+    - Python
+    - LangChain
+  order: 2

@@ -1,0 +1,85 @@
+---
+const navItems = [
+  { href: "/about", label: "./about" },
+  { href: "/works", label: "./works" },
+  { href: "/blog", label: "./blog" },
+];
+
+const currentPath = Astro.url.pathname;
+function isActive(href: string) {
+  return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+}
+---
+
+<div class="sticky top-3 z-20 px-4 pt-0 sm:top-4">
+  <div class="mx-auto grid w-full max-w-3xl grid-cols-[1fr_auto_1fr] items-center gap-2">
+    <span class="hidden font-mono text-xs text-faint sm:block">Asia/Tokyo</span>
+
+    <nav
+      class="col-start-2 flex items-center gap-0.5 justify-self-center rounded-pill border border-line bg-nav px-2 py-1.5 font-mono text-xs shadow-raised backdrop-blur-md"
+    >
+      <a
+        href="/"
+        class:list={["pill-link rounded-pill px-3 py-1.5", isActive("/") ? "bg-accent-wash font-semibold text-ink" : "text-muted"]}
+      >
+        ~/
+      </a>
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={["pill-link rounded-pill px-3 py-1.5", isActive(item.href) ? "bg-accent-wash font-semibold text-ink" : "text-muted"]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center justify-end gap-3">
+      <span id="nav-clock" class="hidden font-mono text-xs text-faint sm:block">--:--:-- JST</span>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="toggle theme"
+        class="icon-btn flex h-8 w-8 items-center justify-center rounded-full border border-line bg-chip text-muted"
+      >
+        ◐
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById("nav-clock");
+    if (!el) return;
+    const fmt = new Intl.DateTimeFormat("ja-JP", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Tokyo",
+    });
+    el.textContent = `${fmt.format(new Date())} JST`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  function currentTheme() {
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  }
+  function applyIcon() {
+    const btn = document.getElementById("theme-toggle");
+    if (btn) btn.textContent = currentTheme() === "dark" ? "◑" : "◐";
+  }
+  applyIcon();
+  document.getElementById("theme-toggle")?.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("noa-portfolio-theme", next);
+    } catch (e) {}
+    applyIcon();
+  });
+</script>

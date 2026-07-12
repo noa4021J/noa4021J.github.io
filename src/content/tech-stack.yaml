@@ -1,0 +1,28 @@
+- id: ai-llm
+  domain: ai/llm
+  stack: ["RAG", "LangChain", "Phoenix",  "MCP/Tool", "AgentSkills", "Eval/LLM-as-Judge",  "Prompt Engineering", "Context Engineering", "Harness Engineering", "Loop Engineering"]
+  order: 0
+- id: backend
+  domain: backend
+  stack: ["Python", "Go", "Rust"]
+  order: 1
+- id: frontend
+  domain: frontend
+  stack: ["TypeScript", "React", "Next.js"]
+  order: 2
+- id: mobile
+  domain: mobile
+  stack: ["Swift", "UIKit/SwiftUI", "Combine/Concurrency", "XCTest/SwiftTesting"]
+  order: 3
+- id: cloud-native
+  domain: infrastructure
+  stack: ["Docker","Terraform", "GCP", "AWS"]
+  order: 4
+- id: data-observability
+  domain: data/observability
+  stack: ["Datadog", "Firebase", "SQL", "BigQuery", "Looker"]
+  order: 5
+- id: delivery-tooling
+  domain: delivery/tooling
+  stack: ["GitHub Actions", "CircleCI", "Bitrise", "Fastlane", "DocC"]
+  order: 6

@@ -1,0 +1,28 @@
+---
+import SocialIcon from "./SocialIcon.astro";
+import { getCollection } from "astro:content";
+
+const contactSocialIds = ["github", "x", "linkedin"];
+const socials = (await getCollection("socials", ({ id }) => contactSocialIds.includes(id))).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+{/* Topページ最下部専用。index.astro の末尾に配置 */}
+<section id="contact" class="reveal mt-22">
+  <div class="relative overflow-hidden rounded-xl border border-line-soft bg-accent-wash px-11 pb-10 pt-11 text-center">
+    <div class="bg-glow-a pointer-events-none absolute left-1/2 top-[-130px] h-[260px] w-[520px] -translate-x-1/2"></div>
+    <p class="relative font-mono text-[11px] font-semibold uppercase tracking-wide text-muted">// contact</p>
+    <h2 class="relative mt-3.5 text-[26px] font-bold tracking-tight text-ink">Let's work together<span class="text-accent">.</span></h2>
+    <p class="relative mt-3 text-[13.5px] leading-loose text-sub">お仕事のご相談・技術の話など、お気軽にご連絡ください。</p>
+    <div class="relative mt-6 flex items-center justify-center gap-2">
+      {
+        socials.map((s) => (
+          <a href={s.data.url} title={s.data.name} class="icon-btn flex h-[38px] w-[38px] items-center justify-center rounded-full border border-line bg-chip text-sub">
+            <SocialIcon name={s.data.icon} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

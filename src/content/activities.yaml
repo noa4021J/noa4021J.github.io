@@ -1,0 +1,28 @@
+- id: code-with-claude-tokyo
+  title: Code w/ Claude Tokyo 参加レポート ─ AIに業務をどう任せ、どう資産に繋げるか
+  date: "2026.06"
+  tag: 執筆
+- id: dmm-app-night-2024
+  title: DMMのモバイルアプリ開発、赤裸々に語ります。【DMM App Night】
+  date: "2024.08"
+  tag: 登壇
+- id: dmm-swift-2
+  title: "DMM.swift #2 — モバイルアプリのSLI/SLOについて考える"
+  date: "2024.03"
+  tag: 登壇
+- id: dmm-meetup-39
+  title: "開発生産性をどう捉えるか【DMM Meetup #39】"
+  date: "2023.12"
+  tag: 登壇
+- id: fullcycle-onboarding
+  title: フルサイクルエンジニアリングを実践する開発組織のオンボーディング設計
+  date: "2022.12"
+  tag: 執筆
+- id: pointclub-techbook
+  title: "DMM PointClub TechBook #1（技術書典）"
+  date: "2022.09"
+  tag: 共著
+- id: statefulviewcontroller
+  title: DMMポイントクラブのiOSのUI更新を支える StatefulViewController
+  date: "2021.12"
+  tag: 執筆

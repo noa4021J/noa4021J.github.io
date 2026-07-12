@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="Tags" description="タグ別の記事一覧です。">
+  <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// tag index</p>
+  <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">Tags</h1>
+  <ul class="mt-9 flex flex-wrap gap-3">
+    {
+      tags.map(([tag, count]) => (
+        <li>
+          <a href={`/tags/${tag}`} class="tag-chip inline-flex items-center gap-1.5 rounded-pill border border-line px-4 py-2 font-mono text-sm text-muted">
+            {tag} <span class="text-xs text-ghost">{count}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

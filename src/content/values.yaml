@@ -1,0 +1,15 @@
+- id: pragmatism
+  keyword: pragmatism
+  name: 実利志向（プラグマティズム）
+  detail: 事業・経営目線とユーザー目線を視野に課題を俯瞰し、価値と利益を提供することを前提に問題を解決する。
+  order: 0
+- id: craft-and-servant-leadership
+  keyword: craft & serve
+  name: クラフトマンシップとサーバントリーダーシップの両立
+  detail: チームの生産性を高めることを助けながら、一人の技術者として技術力を高め、設計と品質を追求する。
+  order: 1
+- id: less-but-better
+  keyword: less, but better
+  name: 選択と集中（Less but better）
+  detail: 本質を見極め、可能な限り無駄を省き、取り組むべき物事に集中する。
+  order: 2

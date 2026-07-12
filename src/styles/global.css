@@ -1,0 +1,278 @@
+/* ============================================================
+   global.css — noa4021j portfolio design system
+   tokens.css は変数の実体（light/dark + keyframes）。
+   ここは Tailwind v4 の @theme マッピング、ベーススタイル、
+   ユーティリティクラス（hover挙動・背景効果・prose上書き）。
+   ============================================================ */
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "./tokens.css";
+
+@theme inline {
+  --font-sans: "IBM Plex Sans JP", "Hiragino Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* colors — semantic, theme-aware via tokens.css custom properties */
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-chip: var(--chip);
+  --color-ink: var(--ink);
+  --color-body: var(--body-c);
+  --color-sub: var(--sub);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-ghost: var(--ghost);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-accent: var(--accent);
+  --color-accent-wash: var(--accent-wash);
+  --color-nav: var(--nav-bg);
+
+  /* type scale */
+  --text-display: 38px;
+  --text-h1: 32px;
+  --text-h2: 22px;
+  --text-h3: 17px;
+  --text-meta: 12px;
+  --text-micro: 11px;
+
+  /* radius */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  /* shadows */
+  --shadow-raised: 0 8px 22px var(--shadow-soft);
+  --shadow-float: 0 10px 30px var(--shadow-soft);
+  --shadow-hover: 0 18px 44px var(--shadow);
+
+  /* easing */
+  --ease-out-brand: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* ---------- base ---------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+a {
+  color: var(--accent);
+}
+a:hover {
+  color: var(--ink);
+}
+
+/* ---------- background effect utilities ---------- */
+
+.bg-grid-fade {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
+}
+
+.bg-glow {
+  background: radial-gradient(closest-side, var(--glow), transparent 72%);
+  filter: blur(28px);
+}
+
+.bg-glow-a {
+  background: radial-gradient(closest-side, var(--glow-a), transparent 72%);
+  filter: blur(48px);
+}
+
+.bg-glow-b {
+  background: radial-gradient(closest-side, var(--glow-b), transparent 72%);
+  filter: blur(56px);
+}
+
+.text-gradient-brand {
+  background: linear-gradient(105deg, var(--ink) 35%, var(--accent) 78%, var(--sub));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grain {
+  opacity: var(--grain-op);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.bg-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--stripe-a),
+    var(--stripe-a) 12px,
+    var(--stripe-b) 12px,
+    var(--stripe-b) 24px
+  );
+}
+
+/* ---------- interactive component utilities ---------- */
+
+.cursor-blink {
+  animation: blink 1.1s step-start infinite;
+}
+
+.pill-link {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.pill-link:hover {
+  background-color: var(--accent-wash);
+  color: var(--ink);
+}
+
+.icon-btn {
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.tag-chip {
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.tag-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.post-row {
+  transition: background-color 0.15s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.post-row:hover {
+  background-color: var(--accent-wash);
+  transform: translateX(6px);
+}
+.post-row:hover .row-title {
+  color: var(--accent);
+}
+.post-row:hover .row-date {
+  color: var(--accent);
+}
+.post-row:hover .row-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.showcase .sc-cover {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.showcase:hover .sc-cover {
+  box-shadow: var(--elev-hover, 0 18px 44px var(--shadow));
+  transform: translateY(-4px);
+}
+.showcase .sc-title {
+  transition: color 0.15s ease;
+}
+.showcase:hover .sc-title {
+  color: var(--accent);
+}
+.showcase .sc-img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.showcase:hover .sc-img {
+  transform: scale(1.045);
+}
+
+.hl-card {
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.hl-card:hover {
+  box-shadow: 0 12px 32px var(--shadow-soft);
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+/* ---------- prose (article body) overrides ---------- */
+
+.prose {
+  color: var(--body-c);
+}
+.prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"] *)) {
+  color: var(--ink);
+  font-weight: 700;
+}
+.prose :where(strong):not(:where([class~="not-prose"] *)) {
+  color: var(--ink);
+}
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: var(--accent);
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.prose :where(code):not(:where(pre code)):not(:where([class~="not-prose"] *)) {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  background: var(--accent-wash);
+  color: var(--accent);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.prose :where(code):not(:where(pre code))::before,
+.prose :where(code):not(:where(pre code))::after {
+  content: "";
+}
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  border-left-color: var(--accent);
+  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+  quotes: none;
+}
+.prose :where(blockquote p):not(:where([class~="not-prose"] *))::before,
+.prose :where(blockquote p):not(:where([class~="not-prose"] *))::after {
+  content: "";
+}
+.prose :where(hr):not(:where([class~="not-prose"] *)) {
+  border-color: var(--line);
+}
+.prose :where(thead):not(:where([class~="not-prose"] *)) {
+  border-bottom-color: var(--line);
+}
+.prose :where(th):not(:where([class~="not-prose"] *)) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--accent-wash);
+}
+.prose :where(td, th):not(:where([class~="not-prose"] *)) {
+  border-color: var(--line-soft);
+}
+.prose :where(ul > li)::marker,
+.prose :where(ol > li)::marker {
+  color: var(--ghost);
+}
+.prose pre {
+  background: var(--code-bg) !important;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 24px var(--shadow-soft);
+}
+.prose pre,
+.prose code {
+  font-family: var(--font-mono);
+}
+.prose img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}

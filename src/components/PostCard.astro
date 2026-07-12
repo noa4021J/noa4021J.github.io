@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  index?: string;
+  showDescription?: boolean;
+  showTags?: boolean;
+}
+
+const { post, index, showDescription = true, showTags = false } = Astro.props;
+const { title, description, pubDate, category, tags } = post.data;
+const dateLabel = pubDate.toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\//g, ".");
+---
+
+<a href={`/blog/${post.id}`} class="post-row group flex items-baseline gap-4 border-b border-line-soft px-2 py-5">
+  {
+    index && (
+      <span class="w-6 shrink-0 font-mono text-xs text-dim">{index}</span>
+    )
+  }
+  <span class="min-w-0 flex-1">
+    <p class="font-mono text-[11px] text-faint">
+      <time datetime={pubDate.toISOString()} class="row-date transition-colors duration-150">{dateLabel}</time>
+      <span class="mx-2">·</span>
+      {category}
+    </p>
+    <span class="row-title mt-1.5 block text-[17px] font-semibold text-ink transition-colors duration-150">{title}</span>
+    {showDescription && <p class="mt-1 text-sm text-muted">{description}</p>}
+    {
+      showTags && tags.length > 0 && (
+        <span class="mt-2.5 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span class="rounded-sm border border-line-soft px-2 py-0.5 font-mono text-[11px] text-faint">{tag}</span>
+          ))}
+        </span>
+      )
+    }
+  </span>
+  <span class="row-arrow shrink-0 -translate-x-1.5 font-mono text-accent opacity-0 transition-all duration-200">→</span>
+</a>

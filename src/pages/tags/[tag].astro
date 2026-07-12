@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      posts: posts
+        .filter((post) => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`} description={`「${tag}」タグが付いた記事の一覧です。`}>
+  <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// tag</p>
+  <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">{tag}</h1>
+  <div class="mt-9">
+    {posts.map((post) => <PostCard post={post} showTags />)}
+  </div>
+</BaseLayout>

@@ -1,0 +1,249 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SocialIcon from "../components/SocialIcon.astro";
+import { getCollection } from "astro:content";
+
+const socials = (await getCollection("socials")).sort((a, b) => a.data.order - b.data.order);
+const expertise = (await getCollection("expertise")).sort((a, b) => a.data.order - b.data.order);
+const experience = (await getCollection("experience")).sort((a, b) => a.data.order - b.data.order);
+const techStack = (await getCollection("techStack")).sort((a, b) => a.data.order - b.data.order);
+const activities = (await getCollection("activities")).sort((a, b) => (a.data.date > b.data.date ? -1 : 1));
+const education = (await getCollection("education")).sort((a, b) => a.data.order - b.data.order);
+const values = (await getCollection("values")).sort((a, b) => a.data.order - b.data.order);
+
+const talkYears = Array.from(
+  activities.reduce((map, act) => {
+    const year = act.data.date.split(".")[0];
+    if (!map.has(year)) map.set(year, [] as typeof activities);
+    map.get(year)!.push(act);
+    return map;
+  }, new Map<string, typeof activities>())
+).map(([year, items]) => ({ year, items }));
+
+const railItems = [
+  { key: "expertise", label: "expertise" },
+  { key: "experience", label: "experience" },
+  { key: "stack", label: "stack" },
+  { key: "talks", label: "talks" },
+  { key: "education", label: "education" },
+  { key: "values", label: "values" },
+];
+---
+
+<BaseLayout title="About" description="noa4021j の専門領域・経歴・技術・価値観を紹介します。">
+  <nav
+    id="about-rail"
+    class="fixed left-[calc(50%-512px)] top-[220px] z-10 flex flex-col gap-3 font-mono text-[11px] max-[1080px]:hidden"
+    aria-label="ページ内目次"
+  >
+    {
+      railItems.map((item) => (
+        <a href={`#about-${item.key}`} data-rail={item.key} class="rail-link text-ghost transition-colors duration-200">
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <section class="fade-in flex items-start justify-between gap-10 pb-12 max-sm:flex-col-reverse max-sm:pt-16">
+    <div class="max-w-[520px]">
+      <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// about</p>
+      <h1 class="mt-4 font-mono text-[40px] font-bold tracking-tight text-ink">noa4021j</h1>
+      <p class="mt-1.5 font-mono text-[13px] text-muted">Software Engineer, AI/LLM</p>
+      <p class="mt-5 text-[15px] leading-loose text-sub">
+        AI/LLMを軸に、業務で安全に運用できるエージェントアプリケーションを設計・実装しています。モバイルで培った設計・技術リード経験を基盤に、FastAPI・GCPを用いたバックエンドまで領域を広げています。
+      </p>
+      <div class="mt-5 flex gap-2.5">
+        {
+          socials.map((s) => (
+            <a href={s.data.url} title={s.data.name} class="icon-btn flex h-10 w-10 items-center justify-center rounded-full border border-line bg-chip text-sub">
+              <SocialIcon name={s.data.icon} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="shrink-0 text-center">
+      <img src="/images/avatar.png" alt="noa4021j" class="h-[150px] w-[150px] rounded-full border border-line object-cover shadow-hover max-sm:h-28 max-sm:w-28" />
+      <div class="mt-4 flex flex-col gap-1.5 font-mono text-[11px] text-faint">
+        <span>Asia/Tokyo</span>
+        <span>日本語 / English</span>
+      </div>
+    </div>
+  </section>
+
+  {/* 01 Expertise — 静かな4列: 枠・罫線なし、faintなmonoラベル + sans見出し + 説明のみ */}
+  <section id="about-expertise" class="reveal pb-14 pt-9">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">01</span> — Expertise</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">01</span>
+    </div>
+    <div class="mt-8 grid grid-cols-4 gap-7 max-md:grid-cols-2 max-sm:grid-cols-1">
+      {
+        expertise.map((item) => (
+          <article>
+            <p class="font-mono text-[11px] lowercase text-faint">{item.data.badge}</p>
+            <h2 class="mt-2 min-h-[43px] text-[13.5px] font-bold leading-relaxed text-ink max-sm:min-h-0">{item.data.title}</h2>
+            <p class="mt-2.5 text-xs leading-loose text-muted">{item.data.statement}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="about-experience" class="reveal pb-12">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">02</span> — Experience</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">02</span>
+    </div>
+    <div class="mt-7 flex flex-col gap-11">
+      {
+        experience.map((company) => (
+          <div>
+            <div class="flex flex-wrap items-baseline justify-between gap-4">
+              <h3 class="text-[17px] font-bold text-ink">{company.data.company}</h3>
+              <p class="font-mono text-[11.5px] text-faint">{company.data.period}</p>
+            </div>
+            <div class="mt-3 ml-1 flex flex-col border-l border-line py-1 pl-7">
+              {company.data.roles.map((r) => (
+                <div class="relative py-3 first:pt-0">
+                  <span class="absolute left-[-33.5px] top-1.5 h-[9px] w-[9px] rounded-full border-2 border-bg bg-accent" />
+                  <div class="flex flex-wrap items-baseline justify-between gap-4">
+                    <p class="flex items-baseline gap-2 font-mono text-xs text-accent">
+                      {r.role}
+                      {r.employmentType && <span class="rounded-sm border border-line-soft px-2 py-0.5 font-mono text-[10.5px] text-muted">{r.employmentType}</span>}
+                    </p>
+                    <p class="font-mono text-[11.5px] text-ghost">{r.period}</p>
+                  </div>
+                  <p class="mt-2 max-w-[640px] text-[13px] leading-loose text-sub">{r.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* 03 Tech Stack — TechStackRow定義通りのチップ表記 */}
+  <section id="about-stack" class="reveal pb-12">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">03</span> — Tech Stack</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">03</span>
+    </div>
+    <div class="mt-3 flex flex-col">
+      {techStack.map((row) => (
+        <div class="grid grid-cols-[132px_1fr] items-baseline gap-4 border-b border-line-soft py-3.5 max-sm:grid-cols-1 max-sm:gap-2">
+          <span class="font-mono text-[11.5px] font-semibold text-accent">{row.data.domain}</span>
+          <div class="flex flex-wrap gap-1.5">
+            {row.data.stack.map((tech) => (
+              <span class="rounded-sm border border-line-soft bg-chip px-2.5 py-1 font-mono text-[11.5px] text-muted">{tech}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="about-talks" class="reveal pb-12">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">04</span> — Talks &amp; Writing</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">04</span>
+    </div>
+    <div class="mt-3">
+      {talkYears.map((group) => (
+        <div class="grid grid-cols-[88px_1fr] gap-5 border-b border-line-soft py-4.5">
+          <span class="font-mono text-[26px] font-bold leading-tight text-dim">{group.year}</span>
+          <div class="flex flex-col gap-2.5">
+            {group.items.map((act) => (
+              <a href={act.data.url ?? "#"} class="post-row block p-1">
+                <span class="flex items-baseline gap-3">
+                  <span class="w-11 shrink-0 rounded-sm border border-line-soft py-0.5 text-center font-mono text-[10.5px] text-accent">{act.data.tag}</span>
+                  <span class="row-title min-w-0 flex-1 text-[13.5px] font-semibold leading-relaxed text-ink transition-colors duration-150">{act.data.title}</span>
+                  <span class="row-arrow -translate-x-1.5 font-mono text-accent opacity-0 transition-all duration-200">↗</span>
+                </span>
+                {act.data.note && <span class="ml-14 mt-1.5 block font-mono text-[11px] text-accent">→ {act.data.note}</span>}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="about-education" class="reveal pb-12">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">05</span> — Education</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">05</span>
+    </div>
+    <div class="mt-4 flex flex-col">
+      {education.map((e) => (
+        <div class="flex flex-wrap items-baseline justify-between gap-4 border-b border-line-soft py-3.5 last:border-b-0">
+          <div class="flex flex-wrap items-baseline gap-3">
+            <span class="text-sm font-semibold text-sub">{e.data.school}</span>
+            <span class="text-[13px] text-muted">{e.data.degree}</span>
+          </div>
+          <span class="font-mono text-[11.5px] text-faint">{e.data.period}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="about-values" class="reveal pb-6">
+    <div class="flex items-center gap-4">
+      <span class="shrink-0 font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">06</span> — Values</span>
+      <span class="h-px flex-1 bg-line"></span>
+      <span class="font-mono text-[26px] font-bold leading-none text-line">06</span>
+    </div>
+    <div class="mt-7 grid grid-cols-3 gap-5 max-sm:grid-cols-1">
+      {values.map((value, i) => (
+        <div class="relative border-t-2 border-ink pt-4">
+          <span class="absolute right-0 top-2 font-mono text-[40px] font-bold leading-none text-line-soft">{String(i + 1).padStart(2, "0")}</span>
+          {value.data.keyword && <p class="font-mono text-[13px] font-semibold text-accent">{value.data.keyword}</p>}
+          <h3 class="mt-2 text-[15.5px] font-bold leading-snug text-ink">{value.data.name}</h3>
+          <p class="mt-2 text-xs leading-loose text-muted">{value.data.detail}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>("#about-rail a[data-rail]");
+  const sections = document.querySelectorAll("#about-expertise, #about-experience, #about-stack, #about-talks, #about-education, #about-values");
+
+  function setActive(key: string) {
+    links.forEach((link) => {
+      const active = link.dataset.rail === key;
+      link.classList.toggle("text-accent", active);
+      link.classList.toggle("font-semibold", active);
+      link.classList.toggle("text-ghost", !active);
+      link.textContent = (active ? "— " : "") + (link.dataset.rail ?? "");
+    });
+  }
+
+  const spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id.replace("about-", ""));
+      });
+    },
+    { rootMargin: "-25% 0px -65% 0px" }
+  );
+  sections.forEach((el) => spy.observe(el));
+  setActive("expertise");
+
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const el = document.getElementById("about-" + link.dataset.rail);
+      if (!el) return;
+      e.preventDefault();
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
+    });
+  });
+</script>

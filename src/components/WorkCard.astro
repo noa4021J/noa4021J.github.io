@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  work: CollectionEntry<"works">;
+  index?: string;
+  size?: "lg" | "md";
+  class?: string;
+}
+
+const { work, index, size = "lg", class: className = "" } = Astro.props;
+const { title, summary, period, stack, coverImage } = work.data;
+const stackLine = stack.join(" · ");
+const coverHeight = size === "lg" ? "h-[300px] sm:h-[380px]" : "h-[220px]";
+---
+
+<a href={`/works/${work.id}`} class:list={["showcase block", className]}>
+  <div class:list={["sc-cover relative overflow-hidden rounded-xl border border-line shadow-float", coverHeight]}>
+    {
+      coverImage ? (
+        <img src={coverImage} alt={title} class="sc-img absolute inset-0 h-full w-full object-cover" />
+      ) : (
+        <div class="sc-img bg-stripes absolute inset-0 flex items-center justify-center font-mono text-xs text-ghost">
+          cover image
+        </div>
+      )
+    }
+    {
+      index && (
+        <span class="absolute left-4 top-3 font-mono text-5xl font-bold leading-none text-line sm:text-6xl">{index}</span>
+      )
+    }
+    {
+      stackLine && (
+        <span class="absolute bottom-3 left-4 rounded-pill border border-line-soft bg-nav px-3 py-1.5 font-mono text-[11px] text-sub backdrop-blur-md">
+          {stackLine}
+        </span>
+      )
+    }
+  </div>
+  <div class="mt-4 flex items-baseline justify-between gap-6">
+    <div class="min-w-0">
+      <span class="sc-title block text-xl font-bold text-ink">{title}</span>
+      <p class="mt-1.5 text-sm text-muted">{summary}</p>
+    </div>
+    <div class="shrink-0 text-right font-mono text-xs text-faint">
+      <div>{period}</div>
+      <div class="mt-1 text-accent">view project →</div>
+    </div>
+  </div>
+</a>

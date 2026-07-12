@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+import WorkCard from "../components/WorkCard.astro";
+import ContactBand from "../components/ContactBand.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const works = (await getCollection("works")).sort((a, b) => a.data.order - b.data.order).slice(0, 2);
+---
+
+<BaseLayout
+  title="Top"
+  description="noa4021j のポートフォリオ兼テックブログ。ソフトウェアエンジニアとしての実績と技術的な学びを発信しています。"
+>
+  {/* hero: avatar + name + tagline + socials + about link */}
+  <section class="flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
+    <img
+      src="/images/avatar.png"
+      alt="noa4021j"
+      class="fade-in h-[110px] w-[110px] rounded-full border border-line object-cover shadow-hover"
+    />
+    <h1 class="fade-in mt-6 font-mono text-display font-bold tracking-tight" style="animation-delay:.08s">
+      <span class="text-gradient-brand">noa4021j</span><span class="cursor-blink text-accent font-normal">_</span>
+    </h1>
+    <p class="fade-in mt-3 font-mono text-sm text-muted" style="animation-delay:.16s">
+      Software Engineer, AI/LLM
+    </p>
+    <p class="fade-in mt-4 max-w-md text-[15px] leading-loose text-sub" style="animation-delay:.24s">
+      事業への実利を追求し、生成AIがエージェントとして自律的に判断・実行できる基盤を設計しています。
+    </p>
+    <div class="fade-in mt-7" style="animation-delay:.32s">
+      <a href="/about" class="pill-link flex items-center gap-2.5 rounded-pill border border-line bg-nav py-1.5 pl-1.5 pr-4 backdrop-blur-md">
+        <img src="/images/avatar.png" alt="" class="h-[26px] w-[26px] rounded-full object-cover" />
+        <span class="font-mono text-[12.5px] text-ink">./about</span>
+      </a>
+    </div>
+    <span class="fade-in mt-12 font-mono text-[11px] text-dim" style="animation-delay:.6s">
+      // scroll ↓
+    </span>
+  </section>
+
+  {/* 01 Featured Works */}
+  <section class="reveal mt-10">
+    <div class="flex items-baseline justify-between">
+      <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">01</span> — Featured Works</p>
+      <a href="/works" class="font-mono text-xs text-muted hover:text-ink">./works →</a>
+    </div>
+    <div class="mt-7 flex flex-col gap-18">
+      {works.map((work, i) => <WorkCard work={work} index={String(i + 1).padStart(2, "0")} />)}
+    </div>
+  </section>
+
+  {/* 02 Recent Posts */}
+  <section class="reveal mt-22">
+    <div class="flex items-baseline justify-between">
+      <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted"><span class="text-accent">02</span> — Recent Posts</p>
+      <a href="/blog" class="font-mono text-xs text-muted hover:text-ink">./blog →</a>
+    </div>
+    <div class="mt-4">
+      {posts.map((post, i) => <PostCard post={post} index={String(i + 1).padStart(2, "0")} showDescription={false} />)}
+    </div>
+  </section>
+
+  <ContactBand />
+</BaseLayout>
