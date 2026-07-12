@@ -9,10 +9,9 @@ const works = (await getCollection("works")).sort((a, b) => a.data.order - b.dat
 <BaseLayout title="Works" description="noa4021j のプロダクト・実績一覧です。">
   <div class="fade-in">
     <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// works</p>
-    <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">個人開発プロダクト</h1>
-    <p class="mt-3 text-[15px] leading-loose text-muted">個人で企画・開発したプロダクトの一覧です。</p>
+    <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">Works</h1>
   </div>
-  <div class="mt-11 flex flex-col gap-18">
+  <div class="mt-9 flex flex-col gap-18">
     {works.map((work, i) => <WorkCard work={work} index={String(i + 1).padStart(2, "0")} class="reveal" />)}
   </div>
 </BaseLayout>
