@@ -54,8 +54,8 @@ const experience = defineCollection({
         period: z.string(),
         // 雇用形態（副業・内定者アルバイト等）。正社員など既定の雇用形態では省略する。
         employmentType: z.string().optional(),
-        // 責任範囲・主要な行動・成果を2〜3文に集約する。
-        detail: z.string(),
+        // 責任範囲と代表的な変化を1文に集約する。
+        detail: z.string().max(80),
       })
     ),
   }),
