@@ -2,31 +2,19 @@
   title: AI / LLM Application
   badge: PRIMARY FOCUS
   statement: 根拠・権限・評価を統合し、業務で安全に運用できるAIエージェント・LLMアプリケーションを設計・実装する。
-  impact:
-    - プロトタイプから業務検証へ
-    - 監査可能な実行基盤
   order: 0
 - id: software-architecture
   title: Software Architecture
   badge: BACKEND / MOBILE
   statement: 5年以上のプロダクト開発で培った設計力とリード経験を基盤に、本番運用を想定した高品質なソフトウェアを設計・実装する。
-  impact:
-    - Swift 6警告 94%削減
-    - 変更障害率 0%
   order: 1
 - id: engineering-leadership
   title: Engineering Leadership & Productivity
   badge: TEAM / ORG
   statement: フルサイクルエンジニアリングを実践し、事業判断・開発・運用を一つの責任でつなぐ。
-  impact:
-    - 担当機能をコア機能化
-    - PR待機時間 70%+削減
   order: 2
 - id: developer-enablement
   title: Developer Enablement & DevRel
   badge: ENABLE & SHARE
   statement: 技術標準・育成・発信を仕組み化し、組織内外に継続的な技術循環をつくる。
-  impact:
-    - 技術研修 4.5 / 5
-    - DMM.swift 150+
   order: 3
