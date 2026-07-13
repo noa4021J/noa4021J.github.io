@@ -114,7 +114,6 @@ const expertise = defineCollection({
     title: z.string(),
     badge: z.string().optional(),
     statement: z.string().max(100),
-    impact: z.array(z.string().max(40)).min(1).max(2),
     order: z.number().default(0),
   }),
 });
