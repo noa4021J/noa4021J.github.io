@@ -57,11 +57,11 @@ const ogImageURL = new URL(ogImagePath ?? "/og/default.png", Astro.site);
   <body class="font-sans flex min-h-screen flex-col antialiased relative">
     {/* 背景効果: グリッド + グロー + グレイン。コンテンツの後ろに固定表示 */}
     <div class="pointer-events-none fixed inset-x-0 top-0 z-0 h-[900px] overflow-hidden">
-      <div class="bg-grid-fade absolute inset-0"></div>
-      <div class="bg-glow-a absolute left-[16%] top-[-260px] h-[560px] w-[920px]"></div>
-      <div class="bg-glow-b absolute right-[2%] top-[-120px] h-[480px] w-[640px]"></div>
+      <div class="noa-bg-grid absolute inset-0"></div>
+      <div class="noa-bg-glow-a absolute left-[16%] top-[-260px] h-[560px] w-[920px]"></div>
+      <div class="noa-bg-glow-b absolute right-[2%] top-[-120px] h-[480px] w-[640px]"></div>
     </div>
-    <div class="bg-grain pointer-events-none fixed inset-0 z-40"></div>
+    <div class="noa-bg-grain pointer-events-none fixed inset-0 z-40"></div>
 
     <div class="relative z-10 flex min-h-screen flex-1 flex-col">
       <Header />
