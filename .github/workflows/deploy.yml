@@ -21,7 +21,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Configure git for private design-system dependency
-        run: git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "https://github.com/"
+        # pnpm はロックファイル解決時に git 依存の URL を SSH 形式
+        # （git@github.com:...）へ正規化することがあるため、
+        # https:// 形式・SSH 形式の両方を書き換える。
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "git@github.com:"
       - name: Install, build, and upload site
         uses: withastro/action@e84f40bd8d2caa9e768ec82ad30dd81f0b280853 # v6
         with:

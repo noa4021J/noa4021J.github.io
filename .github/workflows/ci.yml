@@ -29,7 +29,12 @@ jobs:
           node-version: 24
           cache: pnpm
       - name: Configure git for private design-system dependency
-        run: git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "https://github.com/"
+        # pnpm はロックファイル解決時に git 依存の URL を SSH 形式
+        # （git@github.com:...）へ正規化することがあるため、
+        # https:// 形式・SSH 形式の両方を書き換える。
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "git@github.com:"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Check Astro
