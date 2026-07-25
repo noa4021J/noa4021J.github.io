@@ -28,6 +28,8 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - name: Configure git for private design-system dependency
+        run: git config --global url."https://x-access-token:${{ secrets.DESIGN_SYSTEM_PAT }}@github.com/".insteadOf "https://github.com/"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Check Astro
