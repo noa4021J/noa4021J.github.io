@@ -11,9 +11,16 @@ import sitemap from '@astrojs/sitemap';
 // ここで tokens.json を直接読んで組み立てている。
 const require = createRequire(import.meta.url);
 const tokens = JSON.parse(fs.readFileSync(require.resolve('@noa4021j/design-system/tokens.json'), 'utf8'));
+
+/** @param {Record<string, { $value: string }>} o */
 const flat = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith('$')).map(([k, v]) => [k, v.$value]));
 
-/** デザインシステムの --code-* をそのまま写した TextMate テーマ */
+/**
+ * デザインシステムの --code-* をそのまま写した TextMate テーマ
+ * @param {string} name
+ * @param {'light' | 'dark'} type
+ * @param {Record<string, string>} c
+ */
 const codeTheme = (name, type, c) => ({
   name,
   type,
