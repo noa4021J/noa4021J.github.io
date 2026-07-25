@@ -14,6 +14,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
+      '@noa4021j/design-system':
+        specifier: git+https://github.com/noa4021j/design-system.git#feat/design-system-bootstrap
+        version: git+https://git@github.com:noa4021j/design-system.git#88d744042a3042b4f58d6f1f99549ea3290f626b
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
@@ -604,6 +607,11 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1
       '@emnapi/runtime': ^1.7.1
+
+  '@noa4021j/design-system@git+https://git@github.com:noa4021j/design-system.git#88d744042a3042b4f58d6f1f99549ea3290f626b':
+    resolution: {commit: 88d744042a3042b4f58d6f1f99549ea3290f626b, repo: git@github.com:noa4021j/design-system.git, type: git}
+    version: 0.1.0
+    engines: {node: '>=22.12.0'}
 
   '@nodable/entities@2.2.0':
     resolution: {integrity: sha512-9uGyhaQavEUMC8AIddIjau4NsnsXhou+j5sBAGojCM1oxmQpVKTWR/9JxABD6UAv12vpIms55fPZKFQEhG6uBg==}
@@ -2591,6 +2599,8 @@ snapshots:
       '@emnapi/runtime': 1.11.2
       '@tybys/wasm-util': 0.10.3
     optional: true
+
+  '@noa4021j/design-system@git+https://git@github.com:noa4021j/design-system.git#88d744042a3042b4f58d6f1f99549ea3290f626b': {}
 
   '@nodable/entities@2.2.0': {}
 

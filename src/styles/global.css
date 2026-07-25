@@ -7,7 +7,10 @@
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@import "./tokens.css";
+@import "@noa4021j/design-system/tokens.css";
+@import "@noa4021j/design-system/content.css";
+@import "@noa4021j/design-system/components.css";
+@import "@noa4021j/design-system/decor.css";
 
 @theme inline {
   --font-sans: "IBM Plex Sans JP", "Hiragino Sans", sans-serif;
@@ -73,54 +76,6 @@ a {
 }
 a:hover {
   color: var(--ink);
-}
-
-/* ---------- background effect utilities ---------- */
-
-.bg-grid-fade {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
-  mask-image: linear-gradient(to bottom, black 0%, transparent 72%);
-}
-
-.bg-glow {
-  background: radial-gradient(closest-side, var(--glow), transparent 72%);
-  filter: blur(28px);
-}
-
-.bg-glow-a {
-  background: radial-gradient(closest-side, var(--glow-a), transparent 72%);
-  filter: blur(48px);
-}
-
-.bg-glow-b {
-  background: radial-gradient(closest-side, var(--glow-b), transparent 72%);
-  filter: blur(56px);
-}
-
-.text-gradient-brand {
-  background: linear-gradient(105deg, var(--ink) 35%, var(--accent) 78%, var(--sub));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.bg-grain {
-  opacity: var(--grain-op);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.bg-stripes {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--stripe-a),
-    var(--stripe-a) 12px,
-    var(--stripe-b) 12px,
-    var(--stripe-b) 24px
-  );
 }
 
 /* ---------- interactive component utilities ---------- */
@@ -201,78 +156,18 @@ a:hover {
   border-color: var(--accent);
 }
 
-/* ---------- prose (article body) overrides ---------- */
+/* ---------- Shiki のライト/ダーク切替 ----------
+   shikiConfig.defaultColor: false により、Shiki は各トークンへ
+   --shiki-light / --shiki-dark の両方を出力する。どちらを使うかは
+   ここで data-theme に応じて選ぶ。地色は content.css の
+   .noa-prose pre が --code-bg で塗るため、ここでは文字色だけ扱う。 */
 
-.prose {
-  color: var(--body-c);
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
 }
-.prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"] *)) {
-  color: var(--ink);
-  font-weight: 700;
-}
-.prose :where(strong):not(:where([class~="not-prose"] *)) {
-  color: var(--ink);
-}
-.prose :where(a):not(:where([class~="not-prose"] *)) {
-  color: var(--accent);
-  text-decoration-color: var(--line);
-  text-underline-offset: 3px;
-}
-.prose :where(code):not(:where(pre code)):not(:where([class~="not-prose"] *)) {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  background: var(--accent-wash);
-  color: var(--accent);
-  border: 1px solid var(--line-soft);
-  border-radius: 4px;
-  padding: 1px 6px;
-}
-.prose :where(code):not(:where(pre code))::before,
-.prose :where(code):not(:where(pre code))::after {
-  content: "";
-}
-.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
-  border-left-color: var(--accent);
-  color: var(--muted);
-  font-style: normal;
-  font-weight: 400;
-  quotes: none;
-}
-.prose :where(blockquote p):not(:where([class~="not-prose"] *))::before,
-.prose :where(blockquote p):not(:where([class~="not-prose"] *))::after {
-  content: "";
-}
-.prose :where(hr):not(:where([class~="not-prose"] *)) {
-  border-color: var(--line);
-}
-.prose :where(thead):not(:where([class~="not-prose"] *)) {
-  border-bottom-color: var(--line);
-}
-.prose :where(th):not(:where([class~="not-prose"] *)) {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  background: var(--accent-wash);
-}
-.prose :where(td, th):not(:where([class~="not-prose"] *)) {
-  border-color: var(--line-soft);
-}
-.prose :where(ul > li)::marker,
-.prose :where(ol > li)::marker {
-  color: var(--ghost);
-}
-.prose pre {
-  background: var(--code-bg) !important;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 24px var(--shadow-soft);
-}
-.prose pre,
-.prose code {
-  font-family: var(--font-mono);
-}
-.prose img {
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
+
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark);
 }

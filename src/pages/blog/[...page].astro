@@ -42,7 +42,7 @@ function dateLabel(d: Date) {
             {featuredMain.data.coverImage ? (
               <img src={featuredMain.data.coverImage} alt={featuredMain.data.title} class="sc-img absolute inset-0 h-full w-full object-cover" />
             ) : (
-              <div class="sc-img bg-stripes absolute inset-0 flex items-center justify-center font-mono text-xs text-ghost">eyecatch</div>
+              <div class="sc-img noa-bg-stripes absolute inset-0 flex items-center justify-center font-mono text-xs text-ghost">eyecatch</div>
             )}
             <span class="absolute bottom-3 left-4 rounded-pill border border-line-soft bg-nav px-3 py-1.5 font-mono text-[11px] text-sub backdrop-blur-md">
               {featuredMain.data.category}
@@ -63,7 +63,7 @@ function dateLabel(d: Date) {
                   {post.data.coverImage ? (
                     <img src={post.data.coverImage} alt={post.data.title} class="sc-img absolute inset-0 h-full w-full object-cover" />
                   ) : (
-                    <div class="sc-img bg-stripes absolute inset-0 flex items-center justify-center font-mono text-[11px] text-ghost">eyecatch</div>
+                    <div class="sc-img noa-bg-stripes absolute inset-0 flex items-center justify-center font-mono text-[11px] text-ghost">eyecatch</div>
                   )}
                 </div>
                 <div class="mt-3">
