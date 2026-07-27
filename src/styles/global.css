@@ -33,13 +33,16 @@
   --color-accent-wash: var(--accent-wash);
   --color-nav: var(--nav-bg);
 
-  /* type scale */
-  --text-display: 38px;
-  --text-h1: 32px;
-  --text-h2: 22px;
-  --text-h3: 17px;
-  --text-meta: 12px;
-  --text-micro: 11px;
+  /* type scale — 値はデザインシステムの tokens.css が持つ。
+     ここは Tailwind のユーティリティ名へ橋渡しするだけ。 */
+  --text-display: var(--text-display);
+  --text-title: var(--text-title);
+  --text-h1: var(--text-h1);
+  --text-h2: var(--text-h2);
+  --text-h3: var(--text-h3);
+  --text-h4: var(--text-h4);
+  --text-meta: var(--text-meta);
+  --text-micro: var(--text-micro);
 
   /* radius */
   --radius-sm: 4px;

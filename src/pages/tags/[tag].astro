@@ -22,7 +22,7 @@ const { posts } = Astro.props;
 
 <BaseLayout title={`#${tag}`} description={`「${tag}」タグが付いた記事の一覧です。`}>
   <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// tag</p>
-  <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">{tag}</h1>
+  <h1 class="mt-2.5 text-title font-bold tracking-tight text-ink">{tag}</h1>
   <div class="mt-9">
     {posts.map((post) => <PostCard post={post} showTags />)}
   </div>
