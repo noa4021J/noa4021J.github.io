@@ -15,7 +15,7 @@ const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
 
 <BaseLayout title="Tags" description="タグ別の記事一覧です。">
   <p class="font-mono text-xs font-semibold uppercase tracking-wide text-muted">// tag index</p>
-  <h1 class="mt-2.5 text-h1 font-bold tracking-tight text-ink">Tags</h1>
+  <h1 class="mt-2.5 text-title font-bold tracking-tight text-ink">Tags</h1>
   <ul class="mt-9 flex flex-wrap gap-3">
     {
       tags.map(([tag, count]) => (
